@@ -1,0 +1,138 @@
+# HDInsight and Data Lake Storage Gen2
+
+#### Overview
+
+This document covers the CLI steps to create HDInsight, then registering Data Lake Storage Gen2 on it.
+
+#### Steps
+
+
+* **Prerequisite**: 
+    * Make sure Data Lake Storage Gen2 is created
+    * Make sure user-identity is created and is assigned the role.
+    
+* **Environmnent Variables**: Set the environment variables as needed
+
+```
+export LOC=westus
+az account set --subscription 917f0e40-319a-462c-8d89-330f3bf4b45b
+export RESOURCE_GROUP=rg-casestduy1
+export IDENTITY=identity-casestudy1
+export AZ_DLAKE_GEN2=storagegen2casestudy1
+```
+
+* **CLI Deployment**: 
+
+    As HDInsight keeps running all the times, you might want to create the cluster only when you need it.
+    So rather than doing deployment using Azure portal UI, you can  do it using Azure CLI. 
+    For this you would need two files to be created - `template.json` and `parameters.json`.
+    There are two ways to create these files.
+    
+    * Using the portal
+        
+        * Go to the portal, select appropriate cluster size and 
+            other things like Gen2 storage, managed identity etc.
+            
+        * On the last page, do not click on 'Create', rather select the option `Download template and parameters`
+        
+        * This would download a zip file containing `template.json`, `parameters.json` and some other files.
+        
+        * These files would have everything set properly as per your selection.
+        
+        * You would have to add the password in `parameters.json`.
+     
+    * Directly using JSON
+        
+        * Download the [template json](https://github.com/Azure-Samples/hdinsight-data-lake-storage-gen2-templates/blob/master/hdinsight-adls-gen2-template.json)
+        
+        * Download the [parameters.json](https://github.com/Azure-Samples/hdinsight-data-lake-storage-gen2-templates/blob/master/parameters.json)
+        
+        * Edit the `template.josn` and `parameters.json`
+            * Change the `SUBSCRIPTION_ID`
+            * Change the location to `westus`
+            * Change the clusterVersion to `3.6`
+            * Change clusterWorkerCount to `2`
+            * Set the clusterLoginPassword and sshPassword to same value
+            * Change spark to `2.3`
+            * Change storageaccounts to `storagegen2casestudy1`
+            * Set resource group `rg-casestduy1`
+            * Change managed identify `identity-casestudy1`
+            * Change all targetInstanceCount to `2`
+            * Change all vmSize to `Standard_A2m_V2` for `headnode` and `workernodes`
+            
+    * Once `template.json` and `parameters.json` is ready, using the following command create the HDInsight Cluster.
+    
+    ```
+    export HDINSIGHT_CLUSTER=hdinsight-casestudy1
+    
+    az group deployment create --name $HDINSIGHT_CLUSTER --resource-group $RESOURCE_GROUP --template-file template/template.json --parameters template/parameters.json
+    
+    ```
+    
+    * The command would run for about 10-15 minutes. The output from command would be JSON endnig as below:
+    
+    ```json
+    {
+      id": "/subscriptions/xxxxxxx/resourceGroups/rg-casestduy1/providers/Microsoft.Resources/deployments/hdinsight-casestudy1",
+      "location": null,
+    {
+    ...
+    "provisioningState": "Succeeded",
+    "template": null,
+    "templateHash": "4181865115933066727",
+    "templateLink": null,
+    "timestamp": "2019-07-13T13:24:32.059946+00:00"
+  },
+  "resourceGroup": "rg-casestduy1",
+  "type": null
+    }
+    ```
+    
+    * In about 2-3 minutes, the cluster would be visible in the portal. 
+    Once it is ready, the status would be should as `Operational`.
+    
+    * So your cluster is now ready to be operated.
+    
+* **Accessing Storage Gen2 as HDFS**
+
+    * While deploying, you have registered Storage Gen2. 
+    So the HDFS file system of the cluster would be on ABFS (Azure Blob File System).
+    
+    * If you open the BLOB container and connect to Gen2 account, you would see the HDFS files there.
+    
+    * SSH to the cluster from your machine
+    
+    ```
+    ssh sshuser@hdinsight-casestudy1-ssh.azurehdinsight.net
+    ```
+    
+    * Check the HDFS files, they would be the same as shown on the BLOB explorer. 
+    This file system is specific to this cluster.
+    
+    ```
+    hdfs dfs -ls /
+    ```
+    
+    * Now we want to create BLOB container for our data. 
+    This step would create a container on Gen2 storage. In addition to this cluster, this container would be accessible 
+     in all of the Azure components like Databricks cluster, Data Factory, VMs etc.
+        
+    ```
+    hadoop fs -D "fs.azure.createRemoteFileSystemDuringInitialization=true" -ls abfs://data-lake-blob@storagegen2casestudy1.dfs.core.windows.net/
+    ```
+    
+    * Create a directory on the ABFS using hdfs command.
+    
+    ```
+    hdfs dfs -mkdir -p abfs://data-lake-blob@storagegen2casestudy1.dfs.core.windows.net/data/a_raw/
+    ```
+    
+    * Refresh your blob container and it would be visible there as well.
+    
+    * Now you can connect to the master node and install python packages that you need to install there.
+    
+    * Setup PyCharm connectivity and run the project code there.
+    
+    
+    
+    
