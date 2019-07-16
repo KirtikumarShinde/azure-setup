@@ -91,10 +91,10 @@
                 "storageProfile": {
                     "storageaccounts": [
                         {
-                            "name": "storagegen2casestudy1.dfs.core.windows.net",
+                            "name": "gen2storagecasestudy1.dfs.core.windows.net",
                             "isDefault": true,
                             "fileSystem": "hdinsight-casestudy1-2019-07-13",
-                            "resourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourceGroups/rg-casestudy1/providers/Microsoft.Storage/storageAccounts/storagegen2casestudy1",
+                            "resourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourceGroups/rg-casestudy1/providers/Microsoft.Storage/storageAccounts/gen2storagecasestudy1",
                             "msiResourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourcegroups/rg-casestudy1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-casestudy1"
                         }
                     ]
