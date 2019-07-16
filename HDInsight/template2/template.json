@@ -91,11 +91,11 @@
                 "storageProfile": {
                     "storageaccounts": [
                         {
-                            "name": "storagegen2casestudy1.dfs.core.windows.net",
+                            "name": "storagegen2casestudy2.dfs.core.windows.net",
                             "isDefault": true,
-                            "fileSystem": "hdinsight-casestudy1-2019-07-13",
-                            "resourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourceGroups/rg-casestduy1/providers/Microsoft.Storage/storageAccounts/storagegen2casestudy1",
-                            "msiResourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourcegroups/rg-casestduy1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-casestudy1"
+                            "fileSystem": "hdinsight-casestudy2-2019-07-13",
+                            "resourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourceGroups/rg-casestduy1/providers/Microsoft.Storage/storageAccounts/storagegen2casestudy2",
+                            "msiResourceId": "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourcegroups/rg-casestduy1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-casestudy2"
                         }
                     ]
                 },
@@ -142,7 +142,7 @@
             "identity": {
                 "type": "UserAssigned",
                 "userAssignedIdentities": {
-                    "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourcegroups/rg-casestduy1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-casestudy1": {}
+                    "/subscriptions/917f0e40-319a-462c-8d89-330f3bf4b45b/resourcegroups/rg-casestduy1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/identity-casestudy2": {}
                 }
             }
         }
