@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "clusterName": {
+            "value": "hdinsight-casestudy1"
+        },
+        "clusterLoginUserName": {
+            "value": "admin"
+        },
+        "clusterLoginPassword": {
+            "value": "Pass@12345"
+        },
+        "location": {
+            "value": "westus"
+        },
+        "clusterWorkerNodeCount": {
+            "value": 2
+        },
+        "clusterKind": {
+            "value": "SPARK"
+        },
+        "clusterVersion": {
+            "value": "3.6"
+        },
+        "sshUserName": {
+            "value": "sshuser"
+        },
+        "sshPassword": {
+            "value": "Pass@12345"
+        }
+    }
+}
